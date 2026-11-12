@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id" manifest="cache-ps4-legacy.appcache">
+<head>
+  <link rel="icon" type="image/png" href="../11/logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B41M Host Exploit PS4</title>
+  <link rel="stylesheet" href="includes/style.css">
+</head>
+<body>
+
+<!-- ASCII Banner -->
+  <pre class="ascii-banner">
+██████╗ ██╗  ██╗ ██╗███╗   ███╗     ██╗███████╗██████╗ ██╗      █████╗ ██╗   ██╗██████╗  ██████╗ ██╗  ██╗
+██╔══██╗██║  ██║███║████╗ ████║    ███║╚════██║██╔══██╗██║     ██╔══██╗╚██╗ ██╔╝██╔══██╗██╔═══██╗╚██╗██╔╝
+██████╔╝███████║╚██║██╔████╔██║    ╚██║    ██╔╝██████╔╝██║     ███████║ ╚████╔╝ ██████╔╝██║   ██║ ╚███╔╝ 
+██╔══██╗╚════██║ ██║██║╚██╔╝██║     ██║   ██╔╝ ██╔═══╝ ██║     ██╔══██║  ╚██╔╝  ██╔══██╗██║   ██║ ██╔██╗ 
+██████╔╝     ██║ ██║██║ ╚═╝ ██║     ██║   ██║  ██║     ███████╗██║  ██║   ██║   ██████╔╝╚██████╔╝██╔╝ ██╗
+╚═════╝      ╚═╝ ╚═╝╚═╝     ╚═╝     ╚═╝   ╚═╝  ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═════╝  ╚═════╝ ╚═╝  ╚═╝
+</pre>
+
+  <h1 data-text="B41M 17PlayBox Jailbreak">B41M 17PlayBox Jailbreak</h1>
+  <h3 id="UA">> Berjalan pada:</h3>
+
+  <div id="cache-status" class="cache-status" role="status">Menyiapkan cache offline...</div>
+
+  <!-- Status Dashboard -->
+  <div class="status-dashboard">
+    <div class="status-item">
+      <span class="label">[SYS]</span>
+      <span class="value" id="sys-status">MEMULAI</span>
+    </div>
+    <div class="status-item">
+      <span class="label">[EXPLOIT]</span>
+      <span class="value" id="exploit-status">SIAP</span>
+    </div>
+    <div class="status-item">
+      <span class="label">[UPTIME]</span>
+      <span class="value" id="uptime-display">00:00:00</span>
+    </div>
+    <div class="status-item">
+      <span class="label">[CONN]</span>
+      <span class="value" id="conn-status">AMAN</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="btn-container">
+    <form id="kernel-options">
+      <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
+      <label for="netctrl-exploit">NetCtrl</label>
+      <input type="radio" name="kernel" id="lapse-exploit" value="lapse">
+      <label for="lapse-exploit">Lapse</label>
+    </form>
+    <button id="jeilbrek">> Jalankan Jailbreak</button>
+    <div class="autoJb">
+      <label for="autoJbInput" id="autoJbLabel">Jailbreak Otomatis</label>
+      <input id="autoJbInput" type="checkbox">
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <div class="media-box">
+      <img src="includes/ps.jpg" alt="PS4 Console">
+    </div>
+
+    <pre id="console"><div id="console-content"><span class="log-system">[SISTEM] Terminal siap. Menunggu eksekusi...</span><span class="cursor"></span></div>
+  </pre>
+
+  </div>
+
+  <p><a class="change-firmware" href="../index.html?change=1">[ GANTI PILIHAN FIRMWARE ]</a></p>
+
+  <footer class="site-footer">
+    <div class="footer-info">
+      <span class="footer-label">[ALAMAT]</span>
+      <span class="footer-value">Jl. Tahir, Muara Jawa, Kukar, KAL-TIM, Indonesia.</span>
+    </div>
+    <div class="footer-info">
+      <span class="footer-label">[KONTAK]</span>
+      <span class="footer-value">085555551497</span>
+    </div>
+    <div class="footer-info">
+      <span class="footer-label">[COPYRIGHT]</span>
+      <span class="footer-value">© <span id="footer-year"></span> B41M 17PlayBox</span>
+    </div>
+    <div class="footer-info">
+      <span class="footer-label">[PEMILIK]</span>
+      <span class="footer-value">Ibrahim Yusuf</span>
+    </div>
+  </footer>
+
+  <script src="src/main.js"></script>
+  <script src="includes/script.js"></script>
+  <script>
+    (function () {
+      var status = document.getElementById("cache-status");
+      var btn = document.getElementById("jeilbrek");
+      function setStatus(t, cls) { status.textContent = t; status.className = "cache-status" + (cls ? " " + cls : ""); }
+      function lockBtn() { if (btn) btn.classList.add("cache-locked"); }
+      function unlockBtn() { if (btn) btn.classList.remove("cache-locked"); }
+      lockBtn();
+
+      var ac = window.applicationCache;
+      function cacheIsReady() {
+        if (!ac) return false;
+        if (ac.status === ac.UNCACHED || ac.status === ac.OBSOLETE) return false;
+        try { if (typeof ac.length === "number" && ac.length === 0) return false; } catch (e) {}
+        return ac.status === ac.IDLE || ac.status === ac.UPDATEREADY;
+      }
+      function enable() { unlockBtn(); setStatus("Cache siap — silakan mulai jailbreak", "ready"); }
+
+      if (!ac || !document.documentElement.hasAttribute("manifest")) {
+        unlockBtn();
+        setStatus("Aplikasi tidak mendukung cache otomatis", "");
+      } else if (!navigator.onLine) {
+        if (cacheIsReady()) enable();
+        else setStatus("Luring dan cache kosong — silakan sambungkan internet sekali", "failed");
+      } else if (cacheIsReady()) {
+        enable();
+      } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch (e) {}
+        enable();
+      } else {
+        setStatus("Menyimpan cache host...", "");
+        ac.addEventListener("downloading", function () { setStatus("Mengunduh cache...", ""); }, false);
+        ac.addEventListener("progress", function (e) {
+          if (e && e.total) setStatus("Mengunduh cache: " + Math.round((e.loaded / e.total) * 100) + "%", "");
+        }, false);
+        ac.addEventListener("cached", function () {
+          try { ac.swapCache(); } catch (e) {}
+          enable();
+        }, false);
+        ac.addEventListener("updateready", function () {
+          try { ac.swapCache(); } catch (e) {}
+          enable();
+        }, false);
+        ac.addEventListener("noupdate", function () {
+          if (cacheIsReady()) enable();
+          else setStatus("Cache masih kosong", "failed");
+        }, false);
+        ac.addEventListener("error", function () {
+          setStatus("Unduhan cache gagal — silakan muat ulang dengan internet", "failed");
+        }, false);
+        ac.addEventListener("obsolete", function () {
+          setStatus("Cache sudah usang", "failed");
+        }, false);
+      }
+    })();
+  </script>
+</body>
+
+</html>
